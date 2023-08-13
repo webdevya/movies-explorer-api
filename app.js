@@ -6,7 +6,7 @@ const cors = require('cors');
 const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const { errorConsole, errorResponder } = require('./middleware/errorMiddleware');
-// const auth = require('./middleware/auth');
+const auth = require('./middleware/auth');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 
 const {
@@ -38,16 +38,16 @@ const corsOptions = {
 app.use(requestLogger);
 app.use(cors(corsOptions));
 
-app.use('/', require('./routes/index'));
+// app.use('/', require('./routes/index'));
 
-// app.use('/', require('./routes/auth'));
+app.use('/', require('./routes/auth'));
 
-// app.use(errors());
-// app.use(auth);
+app.use(errors());
+app.use(auth);
 
-// app.use('/users', require('./routes/user'));
-// app.use('/movies', require('./routes/movie'));
-// app.use('*', require('./routes/notFound'));
+app.use('/users', require('./routes/user'));
+app.use('/movies', require('./routes/movie'));
+app.use('*', require('./routes/notFound'));
 
 app.use(errorLogger);
 
