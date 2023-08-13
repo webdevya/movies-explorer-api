@@ -6,9 +6,7 @@ const Movie = require('../models/movie');
 const { createUserViewModel } = require('./user');
 
 const { CREATED } = require('../utils/responseCodes');
-
-const notFoundText = 'Фильм не найден';
-const validationErrorText = 'Ошибка вносимых данных для фильма';
+const { movieNotFoundText, movieValidationErrorText } = require('../utils/errorText');
 
 const viewModelMovie = (data) => {
   const res = {
@@ -70,14 +68,14 @@ module.exports.createMovie = (req, res, next) => {
   })
     .catch((err) => {
       if (err instanceof mongoose.Error) {
-        next(new ValidationError(validationErrorText, err.message));
+        next(new ValidationError(movieValidationErrorText, err.message));
       } else next(err);
     });
 };
 
 module.exports.deleteMovie = (req, res, next) => {
   Movie.findById(req.params.movieId).then((mve) => {
-    if (!mve) throw (new NotFoundError(notFoundText));
+    if (!mve) throw (new NotFoundError(movieNotFoundText));
     if (!mve.owner._id.equals(req.user._id)) throw (new ForbiddenError());
     return mve.deleteOne();
   }).then((del) => res.send(del))
@@ -90,7 +88,7 @@ module.exports.getAllMovies = (req, res, next) => {
   })
     .catch((err) => {
       if (err instanceof mongoose.Error) {
-        next(new ValidationError(validationErrorText, err.message));
+        next(new ValidationError(movieValidationErrorText, err.message));
       } else next(err);
     });
 };

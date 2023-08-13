@@ -1,3 +1,4 @@
 const NotFoundError = require('../errors/NotFoundError');
+const { pageNotFoundText } = require('../utils/errorText');
 
-module.exports.notFoundFunc = (req, res, next) => next(new NotFoundError('Запрашиваемая страница не найдена'));
+module.exports.notFoundFunc = (req, res, next) => next(new NotFoundError(pageNotFoundText));

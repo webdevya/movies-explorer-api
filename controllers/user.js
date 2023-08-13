@@ -9,9 +9,11 @@ const { dataHandler } = require('../utils/dataHandler');
 const { JWT_SECRET } = require('../config');
 const { CREATED } = require('../utils/responseCodes');
 
-const notFoundText = 'Пользователь не найден';
-const validationErrorText = 'Ошибка вносимых данных для пользователя';
-const conflictErrorText = 'Указанные данные уже существуют';
+const {
+  userNotFoundText,
+  userValidationErrorText,
+  userConflictErrorText,
+} = require('../utils/errorText');
 
 const viewModelUser = (data) => {
   const res = {
@@ -20,7 +22,7 @@ const viewModelUser = (data) => {
   return res;
 };
 
-const userDataHandler = dataHandler(viewModelUser, notFoundText);
+const userDataHandler = dataHandler(viewModelUser, userNotFoundText);
 
 module.exports.createUserViewModel = (data) => viewModelUser(data);
 
@@ -42,9 +44,9 @@ module.exports.createUser = (req, res, next) => {
     })).then((data) => res.status(CREATED).send(viewModelUser(data)))
     .catch((err) => {
       if (err.code === 11000) {
-        next(new ConflictError(conflictErrorText, err.message));
+        next(new ConflictError(userConflictErrorText, err.message));
       } else if (err instanceof mongoose.Error) {
-        next(new ValidationError(validationErrorText, err.message));
+        next(new ValidationError(userValidationErrorText, err.message));
       } else next(err);
     });
 };
@@ -56,7 +58,7 @@ const updateUserData = (req, res, next, forUpdate) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error) {
-        next(new ValidationError(validationErrorText, err.message));
+        next(new ValidationError(userValidationErrorText, err.message));
       } else next(err);
     });
 };

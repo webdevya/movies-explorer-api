@@ -1,5 +1,6 @@
 const UserError = require('../errors/UserError');
 const { INTERNAL_SERVER_ERROR } = require('../utils/responseCodes');
+const { internalErrorText } = require('../utils/errorText');
 
 const errorLoggerHandler = (error) => {
   console.log(`error at ${new Date()} -  ${error.name}: ${error.message}\n${error.innerMessage}`);
@@ -9,7 +10,7 @@ const errorResponderHandler = (error, res) => {
   if (error instanceof UserError) {
     res.status(error.statusCode).send({ message: error.message });
   } else {
-    res.status(INTERNAL_SERVER_ERROR).send({ message: 'Произошла ошибка на сервере' });
+    res.status(INTERNAL_SERVER_ERROR).send({ message: internalErrorText });
   }
 };
 
