@@ -57,7 +57,9 @@ const updateUserData = (req, res, next, forUpdate) => {
       userDataHandler(res, data);
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error) {
+      if (err.code === 11000) {
+        next(new ConflictError(userConflictErrorText, err.message));
+      } else if (err instanceof mongoose.Error) {
         next(new ValidationError(userValidationErrorText, err.message));
       } else next(err);
     });
