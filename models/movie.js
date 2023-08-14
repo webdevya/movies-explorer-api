@@ -26,26 +26,18 @@ nameEN — название фильма на английском языке. �
 const userSchema = new mongoose.Schema({
   country: {
     type: String,
-    minlength: 2,
-    maxlength: 30,
     required: true,
   },
   director: {
     type: String,
-    minlength: 2,
-    maxlength: 30,
     required: true,
   },
   description: {
     type: String,
-    minlength: 2,
-    maxlength: 255,
     required: true,
   },
   year: {
     type: String,
-    minlength: 2,
-    maxlength: 30,
     required: true,
   },
   image: {
@@ -74,14 +66,10 @@ const userSchema = new mongoose.Schema({
   },
   nameRU: {
     type: String,
-    minlength: 2,
-    maxlength: 255,
     required: true,
   },
   nameEN: {
     type: String,
-    minlength: 2,
-    maxlength: 255,
     required: true,
   },
   createdAt: {

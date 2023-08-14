@@ -1,17 +1,15 @@
 const { Joi } = require('celebrate');
 const { urlRegex } = require('./regex');
 
-// const stringRule = Joi.string().min(2).max(30);
-const stringRuleRequired = Joi.string().required().min(2).max(30);
-const longStringRuleRequired = Joi.string().required().min(2).max(255);
-// const urlRule = Joi.string().pattern(urlRegex);
+const stringRuleRequired = Joi.string().required();
+const stringRuleRequiredWithLen = Joi.string().required().min(2).max(30);
 const urlRuleRequired = Joi.string().required().pattern(urlRegex);
 const idRule = Joi.string().required().hex().length(24);
 const emailRule = Joi.string().required().email();
 const pwdRule = Joi.string().required().min(1);
 const numberRule = Joi.number().required();
 
-const userTextsRequiredObj = { name: stringRuleRequired };
+const userTextsRequiredObj = { name: stringRuleRequiredWithLen };
 const pwdObj = { password: pwdRule };
 const emailObj = { email: emailRule };
 const movieObj = {
@@ -19,13 +17,13 @@ const movieObj = {
   director: stringRuleRequired,
   duration: stringRuleRequired,
   year: stringRuleRequired,
-  description: longStringRuleRequired,
+  description: stringRuleRequired,
   image: urlRuleRequired,
   trailerLink: urlRuleRequired,
   thumbnail: urlRuleRequired,
   movieId: numberRule,
-  nameRU: longStringRuleRequired,
-  nameEN: longStringRuleRequired,
+  nameRU: stringRuleRequired,
+  nameEN: stringRuleRequired,
 };
 
 const userRule = Joi.object().keys({ ...userTextsRequiredObj, ...emailObj, ...pwdObj });
