@@ -83,7 +83,8 @@ module.exports.deleteMovie = (req, res, next) => {
 };
 
 module.exports.getAllMovies = (req, res, next) => {
-  Movie.find({}).populate('owner').then((data) => {
+  const owner = req.user._id;
+  Movie.find({ owner }).populate('owner').then((data) => {
     res.send(viewModelMovieArray(data));
   })
     .catch((err) => {
