@@ -1,5 +1,5 @@
 const { Joi } = require('celebrate');
-const { urlRegex, jwtRegex } = require('./regex');
+const { urlRegex } = require('./regex');
 
 // const stringRule = Joi.string().min(2).max(30);
 const stringRuleRequired = Joi.string().required().min(2).max(30);
@@ -28,10 +28,6 @@ const movieObj = {
   nameEN: longStringRuleRequired,
 };
 
-const authRule = Joi.object().keys({
-  authorization: Joi.string().replace('Bearer ', '').pattern(jwtRegex),
-}).unknown();
-
 const userRule = Joi.object().keys({ ...userTextsRequiredObj, ...emailObj, ...pwdObj });
 
 const loginRule = Joi.object().keys({ ...emailObj, ...pwdObj });
@@ -45,5 +41,5 @@ const movieIdRule = Joi.object().keys({ movieId: idRule });
 const movieRule = Joi.object().keys(movieObj);
 
 module.exports = {
-  authRule, userRule, loginRule, movieIdRule, movieRule, userIdRule, userTextsRule,
+  userRule, loginRule, movieIdRule, movieRule, userIdRule, userTextsRule,
 };

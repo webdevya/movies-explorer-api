@@ -4,18 +4,12 @@ const {
   deleteMovie, getAllMovies, createMovie,
 } = require('../controllers/movie');
 
-const { authRule, movieIdRule, movieRule } = require('../validation/rules');
+const { movieIdRule, movieRule } = require('../validation/rules');
 
-router.get('/', celebrate({ headers: authRule }), getAllMovies);
+router.get('/', getAllMovies);
 
-router.delete('/:movieId', celebrate({
-  params: movieIdRule,
-  headers: authRule,
-}), deleteMovie);
+router.delete('/:movieId', celebrate({ params: movieIdRule }), deleteMovie);
 
-router.post('/', celebrate({
-  body: movieRule,
-  headers: authRule,
-}), createMovie);
+router.post('/', celebrate({ body: movieRule }), createMovie);
 
 module.exports = router;
