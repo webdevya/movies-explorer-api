@@ -15,7 +15,7 @@ const emailObj = { email: emailRule };
 const movieObj = {
   country: stringRuleRequired,
   director: stringRuleRequired,
-  duration: stringRuleRequired,
+  duration: numberRule,
   year: stringRuleRequired,
   description: stringRuleRequired,
   image: urlRuleRequired,

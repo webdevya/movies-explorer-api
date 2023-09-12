@@ -12,7 +12,7 @@ const {
   NODE_ENV,
 } = process.env;
 
-const PORT_LOCAL = 3000;
+const PORT_LOCAL = 3002;
 const DB_URL_LOCAL = 'mongodb://127.0.0.1:27017/bitfilmsdb';
 const JWT_SECRET_LOCAL = 'fffff71ac2582b2d853ff2afff136731a971798d24ebdd6eb80c9fe6adffffff';
 const LOG_PATH_LOCAL = './logs';
