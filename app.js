@@ -21,7 +21,9 @@ const limiter = rateLimit({
 });
 
 const app = express();
+app.use(errorResponder);
 app.use(requestLogger);
+app.use(errorLogger);
 app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,7 +37,6 @@ const corsOptions = {
   origin: ALLOWED,
   optionsSuccessStatus: 200,
 };
-
 
 app.use(cors(corsOptions));
 
